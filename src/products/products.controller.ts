@@ -48,6 +48,7 @@ export class ProductsController {
 
   @Post()
   create(@Body() payload: CreateProductDto) {
+    console.log(payload);
     return this.productsService.create(payload);
   }
 
