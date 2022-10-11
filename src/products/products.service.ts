@@ -24,11 +24,12 @@ export class ProductsService {
   }
 
   create(payload: any) {
+    this.counterId = this.counterId + 1;
+
     const newProduct = {
       id: this.counterId,
       ...payload,
     };
-    this.counterId = this.counterId + 1;
 
     this.products.push(newProduct);
 
@@ -36,13 +37,13 @@ export class ProductsService {
   }
 
   update(id: number, payload: any) {
-    const productIndex = this.products.findIndex((item) => item.id === id);
+    const product = this.findOne(id);
 
-    if (productIndex === -1) {
-      return;
+    if (!product) {
+      return null;
     }
 
-    const product = this.products[productIndex];
+    const productIndex = this.products.findIndex((item) => item.id === id);
 
     this.products[productIndex] = {
       ...product,
