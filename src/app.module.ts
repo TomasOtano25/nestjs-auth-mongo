@@ -10,11 +10,13 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 
 import { enviroments } from './eviroments';
+import config from './config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
+      load: [config],
       isGlobal: true,
     }),
     HttpModule,
