@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 
+import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { UsersService } from '../services/users.service';
 
 @Controller('users')
@@ -31,7 +32,7 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() payload: any) {
+  create(@Body() payload: CreateUserDto) {
     return {
       message: 'Action create',
       payload,
@@ -39,7 +40,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
+  update(@Param('id') id: number, @Body() payload: UpdateUserDto) {
     return {
       id,
       payload,
