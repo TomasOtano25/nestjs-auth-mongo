@@ -11,6 +11,21 @@ import { DatabaseModule } from './database/database.module';
 import { enviroments } from './eviroments';
 import config from './config';
 
+import { MongoClient } from 'mongodb';
+
+const url = 'mongodb://root:root@localhost:27017';
+const client = new MongoClient(url);
+
+async function run() {
+  await client.connect();
+  const database = client.db('platzi-store');
+  const taskCollection = database.collection('tasks');
+  const tasks = await taskCollection.find().toArray();
+  console.log(tasks);
+}
+
+run();
+
 @Module({
   imports: [
     ConfigModule.forRoot({
