@@ -1,6 +1,7 @@
-import { Module, Global } from '@nestjs/common';
+import { Module, Global, Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { MongoClient } from 'mongodb';
+import { MongooseModule } from '@nestjs/mongoose';
 
 import config from '../config';
 
@@ -14,6 +15,25 @@ import config from '../config';
 
 @Global()
 @Module({
+  imports: [
+    // MongooseModule.forRoot('mongodb://localhost:27017', {
+    //   user: 'root',
+    //   pass: 'root',
+    //   dbName: 'plazti-store',
+    // }),
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigType<typeof config>) => {
+        const { connection, user, password, host, port, dbName } =
+          configService.mongo;
+
+        return {
+          uri: `${connection}://${user}:${password}@${host}:${port}`,
+          dbName,
+        };
+      },
+      inject: [config.KEY],
+    }),
+  ],
   providers: [
     {
       provide: 'MONGO',
@@ -30,6 +50,6 @@ import config from '../config';
       inject: [config.KEY],
     },
   ],
-  exports: ['MONGO'],
+  exports: ['MONGO', MongooseModule],
 })
 export class DatabaseModule {}

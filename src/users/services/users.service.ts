@@ -31,14 +31,7 @@ export class UsersService {
     return user;
   }
 
-  getOrdersByUser(id: number): Order[] {
-    const user = this.findOne(id);
-    return [
-      {
-        date: new Date(),
-        user,
-        products: this.productsService.findAll(),
-      },
-    ];
+  getOrdersByUser(id: number) {
+    return null;
   }
 }
