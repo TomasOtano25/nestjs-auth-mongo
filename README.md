@@ -1,4 +1,4 @@
-# Proyecto Platzi Store With Mongo
+# Proyecto Platzi Store con MongoDB
 
 Este proyecto pertenece al `Curso de NestJS: Persistencia de Datos con MongoDB`
 
