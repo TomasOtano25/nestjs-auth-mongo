@@ -1,13 +1,15 @@
-# Proyecto Platzi Store
+# Proyecto Platzi Store With Mongo
 
-Este proyecto pertenece al `Curso de Backend con NestJS`
+Este proyecto pertenece al `Curso de NestJS: Persistencia de Datos con MongoDB`
 
-## Packages
+## Feature
 
-```
-npm i --save @nestjs/axios
-```
-
-```
-NODE_ENV=prod npm run start:prod
-```
+- [x] Conexion con MongoDB
+- [ ] Creacion de `Schemas`
+  - [x] Products
+  - [ ] Categories
+  - [ ] Brands
+  - [ ] Users
+  - [ ] Customers
+  - [ ] ORder
+- [ ] CRUD de productos sobre Mongo
