@@ -13,5 +13,5 @@ Esta es una API REST con fines educativos, sobre la modelacion de tienda online.
   - [ ] Brands
   - [ ] Users
   - [ ] Customers
-  - [ ] ORder
+  - [ ] Orders
 - [ ] CRUD de productos sobre Mongo

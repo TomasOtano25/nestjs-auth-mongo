@@ -6,10 +6,12 @@ import {
   Post,
   HttpStatus,
   HttpCode,
+  Put,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-import { CreateProductDto } from '../dtos/products.dto';
+import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
 import { ProductsService } from '../services/products.service';
 
 @ApiTags('products')
@@ -35,13 +37,13 @@ export class ProductsController {
     return this.productsService.create(payload);
   }
 
-  // @Put(':id')
-  // update(@Param('id') id: string, @Body() payload: UpdateProductDto) {
-  //   return this.productsService.update(+id, payload);
-  // }
+  @Put(':id')
+  update(@Param('id') id: string, @Body() payload: UpdateProductDto) {
+    return this.productsService.update(id, payload);
+  }
 
-  // @Delete(':id')
-  // delete(@Param('id') id: string) {
-  //   return this.productsService.delete(+id);
-  // }
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.productsService.delete(id);
+  }
 }
