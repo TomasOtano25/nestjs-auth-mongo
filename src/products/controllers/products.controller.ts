@@ -14,6 +14,8 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
 import { ProductsService } from '../services/products.service';
 
+import { MongoIdPipe } from '../../common/mongo-id.pipe';
+
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
@@ -21,7 +23,7 @@ export class ProductsController {
 
   @Get(':productId')
   @HttpCode(HttpStatus.ACCEPTED)
-  getProduct(@Param('productId') productId: string) {
+  getProduct(@Param('productId', MongoIdPipe) productId: string) {
     return this.productsService.findOne(productId);
   }
 
@@ -32,18 +34,22 @@ export class ProductsController {
   }
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() payload: CreateProductDto) {
     console.log(payload);
     return this.productsService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: UpdateProductDto) {
+  update(
+    @Param('id', MongoIdPipe) id: string,
+    @Body() payload: UpdateProductDto,
+  ) {
     return this.productsService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id', MongoIdPipe) id: string) {
     return this.productsService.delete(id);
   }
 }
