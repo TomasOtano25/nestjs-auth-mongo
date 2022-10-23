@@ -8,10 +8,15 @@ import {
   HttpCode,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
+import {
+  CreateProductDto,
+  FilterProductsDto,
+  UpdateProductDto,
+} from '../dtos/products.dto';
 import { ProductsService } from '../services/products.service';
 
 import { MongoIdPipe } from '../../common/mongo-id.pipe';
@@ -29,14 +34,14 @@ export class ProductsController {
 
   @Get()
   @ApiOperation({ summary: 'List of products' })
-  getProducts() {
-    return this.productsService.findAll();
+  getProducts(@Query() params: FilterProductsDto) {
+    console.log(params);
+    return this.productsService.findAll(params);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() payload: CreateProductDto) {
-    console.log(payload);
     return this.productsService.create(payload);
   }
 

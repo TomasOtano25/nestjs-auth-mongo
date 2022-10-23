@@ -4,9 +4,13 @@ import {
   IsUrl,
   IsNotEmpty,
   IsPositive,
+  IsOptional,
+  Min,
 } from 'class-validator';
 
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+
+import { FiltePaginationDto } from '../../common/dtos/FilterPagination.dto';
 
 export class CreateProductDto {
   @IsString()
@@ -38,3 +42,5 @@ export class CreateProductDto {
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
+
+export class FilterProductsDto extends FiltePaginationDto {}
