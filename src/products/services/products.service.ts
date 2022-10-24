@@ -9,6 +9,8 @@ import {
 } from '../dtos/products.dto';
 import { Product } from '../schemas/product.schema';
 
+import { genericFindAll } from '../../common/generic-functions';
+
 @Injectable()
 export class ProductsService {
   constructor(
@@ -55,12 +57,17 @@ export class ProductsService {
 
       const [total, products] = await Promise.all([
         this.productModel.countDocuments(),
-        this.productModel.find(filters).skip(offset).limit(limit).exec(),
+        this.productModel
+          .find(filters)
+          .populate('brand')
+          .skip(offset)
+          .limit(limit)
+          .exec(),
       ]);
 
       return { total, products };
     }
-    return this.productModel.find().exec();
+    return this.productModel.find().populate('brand').exec();
   }
 
   async findOne(id: string) {

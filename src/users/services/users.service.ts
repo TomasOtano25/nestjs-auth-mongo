@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { Order } from '../entities/order.entity';
+import { Order } from '../schemas/order.schema';
 import { ProductsService } from '../../products/services/products.service';
 
 @Injectable()
