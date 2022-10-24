@@ -52,4 +52,25 @@ export class OrdersService {
 
     return deletedOrder;
   }
+
+  async removeProduct(id: string, productId: string) {
+    const order = await this.orderModel.findById(id);
+
+    order.products.pull(productId);
+
+    return order.save();
+  }
+
+  async addProducts(id: string, productsIds: string[]) {
+    const order = await this.orderModel.findById(id);
+
+    if (order) {
+      productsIds.forEach((pId) => {
+        // order.products.push(pId);
+        order.products.addToSet(pId);
+      });
+    }
+
+    return order.save();
+  }
 }
