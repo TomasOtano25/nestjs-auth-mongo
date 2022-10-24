@@ -4,12 +4,12 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { MongoIdPipe } from '../../common/mongo-id.pipe';
 import { CreateUserDto, UpdateUserDto } from '../dtos/users.dto';
 import { UsersService } from '../services/users.service';
 
@@ -19,7 +19,7 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get(':id')
-  get(@Param('id', ParseIntPipe) id: number) {
+  get(@Param('id', MongoIdPipe) id: string) {
     return this.usersService.findOne(id);
   }
 
@@ -28,25 +28,14 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id/orders')
-  getOrders(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.getOrdersByUser(id);
-  }
-
   @Post()
   create(@Body() payload: CreateUserDto) {
-    return {
-      message: 'Action create',
-      payload,
-    };
+    return this.usersService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: UpdateUserDto) {
-    return {
-      id,
-      payload,
-    };
+  update(@Param('id', MongoIdPipe) id: string, @Body() payload: UpdateUserDto) {
+    return this.usersService.update(id, payload);
   }
 
   @Delete(':id')

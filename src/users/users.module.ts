@@ -7,6 +7,7 @@ import { OrdersController } from './controllers/orders.controller';
 import { UsersController } from './controllers/users.controller';
 import { Customer, CustomerSchema } from './schemas/customer.schema';
 import { Order, OrderSchema } from './schemas/order.schema';
+import { User, UserSchema } from './schemas/user.schema';
 import { CustomersService } from './services/customers.service';
 import { OrdersService } from './services/orders.service';
 import { UsersService } from './services/users.service';
@@ -23,10 +24,14 @@ import { UsersService } from './services/users.service';
         name: Order.name,
         schema: OrderSchema,
       },
+      {
+        name: User.name,
+        schema: UserSchema,
+      },
     ]),
   ],
   controllers: [UsersController, CustomersController, OrdersController],
   providers: [UsersService, CustomersService, OrdersService],
-  exports: [],
+  exports: [UsersService],
 })
 export class UsersModule {}
