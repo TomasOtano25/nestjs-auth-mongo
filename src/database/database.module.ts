@@ -1,4 +1,4 @@
-import { Module, Global, Inject } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { MongoClient } from 'mongodb';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -26,8 +26,13 @@ import config from '../config';
         const { connection, user, password, host, port, dbName } =
           configService.mongo;
 
+        let uri = `${connection}://${user}:${password}@${host}`;
+        if (connection === 'mongodb') {
+          uri += `:${port}`;
+        }
+
         return {
-          uri: `${connection}://${user}:${password}@${host}:${port}`,
+          uri: uri,
           dbName,
         };
       },
@@ -41,7 +46,10 @@ import config from '../config';
         const { connection, user, password, host, port, dbName } =
           configService.mongo;
 
-        const url = `${connection}://${user}:${password}@${host}:${port}`;
+        let url = `${connection}://${user}:${password}@${host}`;
+        if (connection === 'mongodb') {
+          url += `:${port}`;
+        }
         const client = new MongoClient(url);
         await client.connect();
         const database = client.db(dbName);
